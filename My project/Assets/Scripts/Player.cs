@@ -1,51 +1,49 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class NewBehaviourScript : MonoBehaviour
 {
     float speed = 5f;    
+    private Animator anim;
 
+    private Rigidbody2D rig; 
 
     void Start()
     {
-        
+        anim = GetComponent<Animator>();
+        rig = GetComponent<Rigidbody2D>();
     }
 
 
     void Update()
     {
-        float movimentoHorizontal = 0;
-        float movimentoVertical = 0;
+
         
 
         if (Input.GetKey(KeyCode.A))
         {
-            movimentoHorizontal = -1;    
+            rig.velocity = Vector2.left * speed; 
+            anim.SetBool("isRun", true);
+            transform.eulerAngles = new Vector2(0f, 180f);
         }
 
         else if (Input.GetKey(KeyCode.D))
         {
-            movimentoHorizontal = 1;
+            rig.velocity = Vector2.right * speed; 
+            anim.SetBool("isRun", true);          
+            transform.eulerAngles = new Vector2(0f, 0f);
         }
 
-    	else if (Input.GetKey(KeyCode.W))
+        else if (Input.GetKey(KeyCode.Space))
         {
-            movimentoVertical = 1;
-        }
 
-        else if (Input.GetKey(KeyCode.S))
-        {
-            movimentoVertical = -1;
         }
 
         else
         {
-            movimentoHorizontal = 0;
-            movimentoVertical = 0;
+            anim.SetBool("isRun", false);
         }
-
-        transform.position += new Vector3(movimentoHorizontal, 0f, 0f) * speed * Time.deltaTime;
-        transform.position += new Vector3(0f, movimentoVertical, 0f) * speed * Time.deltaTime;
     }
 }
