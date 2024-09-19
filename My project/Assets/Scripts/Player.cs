@@ -6,8 +6,8 @@ using UnityEngine.UIElements;
 public class NewBehaviourScript : MonoBehaviour
 {
     float speed = 5f;    
+    public float JumpForce;
     private Animator anim;
-
     private Rigidbody2D rig; 
 
     void Start()
@@ -38,12 +38,14 @@ public class NewBehaviourScript : MonoBehaviour
 
         else if (Input.GetKey(KeyCode.Space))
         {
-
+            rig.AddForce(new Vector2(0f, JumpForce), ForceMode2D.Impulse);
+            anim.SetBool("isJump", true);
         }
 
         else
         {
             anim.SetBool("isRun", false);
+            anim.SetBool("isJump", false);
         }
     }
 }
